@@ -1,0 +1,9 @@
+Package: whatsapp-waydroid
+Version: 1.0.0
+Section: utils
+Priority: optional
+Architecture: amd64
+Maintainer: Josivan Tarcío <dev@example.com>
+Depends: bash, waydroid
+Description: Launcher nativo do WhatsApp via Waydroid
+ Integra o WhatsApp oficial (Android) em container Waydroid, com atalho desktop.

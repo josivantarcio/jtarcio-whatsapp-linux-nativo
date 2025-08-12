@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -e
+
+# postinst para instalar ícones e atualizar caches
+
+# Atualizar cache de desktop
+if command -v update-desktop-database >/dev/null 2>&1; then
+  update-desktop-database >/dev/null || true
+fi
+
+# Atualizar cache de ícones
+if command -v gtk-update-icon-cache >/dev/null 2>&1; then
+  gtk-update-icon-cache -f /usr/share/icons/hicolor >/dev/null 2>&1 || true
+fi
+
+# Mensagem final
+cat <<'EOF'
+[whatsapp-waydroid] Instalado.
+- Para instalar e inicializar o Waydroid, rode: sudo waydroid init (se ainda não feito)
+- Para iniciar sessão Waydroid: waydroid session start
+- Para instalar o WhatsApp (Android): use a UI do Waydroid (Play/Aurora) ou waydroid app install <APK>
+- Para abrir: WhatsApp (Waydroid) no menu ou `whatsapp-waydroid`
+EOF

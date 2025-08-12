@@ -45,6 +45,46 @@ Se houver mensagens sobre LXD, binder/ashmem ou permissões, consulte: https://d
 
 Um .deb do launcher pode ser gerado em `whatsapp-waydroid_1.0.0_amd64.deb` para instalação do binário e do .desktop em `/usr/local/bin` e `/usr/share/applications`.
 
+### Instalação via .deb (recomendado)
+
+```bash
+sudo apt install ./whatsapp-waydroid_1.0.0_amd64.deb
+```
+
+O script de pós-instalação atualiza caches de ícones e desktop. Após instalar:
+
+- Inicialize o Waydroid (se ainda não feito):
+  ```bash
+  sudo waydroid init
+  ```
+- Inicie a sessão:
+  ```bash
+  waydroid session start
+  ```
+- Instale o WhatsApp no Waydroid (UI ou APK) e abra “WhatsApp (Waydroid)” no menu.
+
+### Passos opcionais
+
+- Serviço de usuário para iniciar Waydroid na sessão (opcional):
+  Crie `~/.config/systemd/user/waydroid-session.service` com:
+  ```ini
+  [Unit]
+  Description=Waydroid session
+  After=graphical-session.target
+
+  [Service]
+  ExecStart=/usr/bin/waydroid session start
+  Restart=on-failure
+
+  [Install]
+  WantedBy=default.target
+  ```
+  E ative:
+  ```bash
+  systemctl --user daemon-reload
+  systemctl --user enable --now waydroid-session.service
+  ```
+
 ## Releases automáticas (CI)
 
 Ao criar uma tag `vX.Y.Z`, o GitHub Actions builda e publica o `.deb` nos Releases.
