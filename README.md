@@ -63,6 +63,31 @@ O script de pós-instalação atualiza caches de ícones e desktop. Após instal
   ```
 - Instale o WhatsApp no Waydroid (UI ou APK) e abra “WhatsApp (Waydroid)” no menu.
 
+## Instalação rápida (passo a passo)
+
+1) Instale o pacote .deb (registra atalho/ícone e binário):
+```bash
+sudo apt install ./whatsapp-waydroid_1.0.0_amd64.deb
+```
+
+2) Inicialize o Waydroid (necessário apenas na primeira vez):
+```bash
+sudo waydroid init
+```
+
+3) Inicie a sessão e abra o app:
+```bash
+waydroid session start &
+whatsapp-waydroid
+```
+
+4) Se o WhatsApp Android não estiver instalado no Waydroid, instale via Play/Aurora ou APK:
+```bash
+./scripts/install-apk.sh /caminho/para/WhatsApp.apk
+```
+
+Pronto. A partir daí, use o atalho “WhatsApp (Waydroid)” no menu do sistema.
+
 ### Passos opcionais
 
 - Serviço de usuário para iniciar Waydroid na sessão (opcional):
@@ -84,6 +109,39 @@ O script de pós-instalação atualiza caches de ícones e desktop. Após instal
   systemctl --user daemon-reload
   systemctl --user enable --now waydroid-session.service
   ```
+
+## Diagnóstico e resolução de problemas
+
+Se o comando `whatsapp-waydroid` falhar, rode o diagnóstico:
+
+```bash
+./scripts/diagnose.sh
+```
+
+Erros comuns e soluções:
+- “Waydroid não instalado” ou `waydroid` ausente no PATH:
+  ```bash
+  sudo apt install waydroid
+  ```
+- “Sessão do Waydroid não iniciou” ou não está RUNNING:
+  ```bash
+  sudo waydroid init
+  waydroid session start
+  ```
+  Consulte também módulos do kernel (binder/ashmem) em https://docs.waydro.id/
+- “Pacote com.whatsapp não encontrado”: instale via UI do Waydroid (Play/Aurora) ou APK:
+  ```bash
+  ./scripts/install-apk.sh /caminho/para/WhatsApp.apk
+  ```
+
+## Desinstalação
+
+Para remover o launcher instalado via .deb:
+```bash
+sudo apt remove whatsapp-waydroid
+```
+
+Isso removerá o binário, o .desktop e os ícones. As configurações do Waydroid permanecem no sistema.
 
 ## Releases automáticas (CI)
 
