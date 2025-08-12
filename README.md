@@ -45,9 +45,13 @@ Se houver mensagens sobre LXD, binder/ashmem ou permissões, consulte: https://d
 
 Um .deb do launcher pode ser gerado em `whatsapp-waydroid_1.0.0_amd64.deb` para instalação do binário e do .desktop em `/usr/local/bin` e `/usr/share/applications`.
 
+## Releases automáticas (CI)
+
+Ao criar uma tag `vX.Y.Z`, o GitHub Actions builda e publica o `.deb` nos Releases.
+
 ## Contribuições e Issues
 
-Issues são bem-vindas. Use a aba de Issues do GitHub para reportar bugs e sugestões.
+Issues são bem-vindas. Use a aba de Issues do GitHub para reportar bugs e sugestões. Templates de Issue estão disponíveis (bug/feature).
 
 ## Licença e Autoria
 

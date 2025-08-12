@@ -1,0 +1,47 @@
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build .deb
+        run: |
+          set -e
+          cd whatsapp-ubuntu-native || true
+          # Detect path (repo can be root of this project)
+          if [ ! -d debian ] && [ -d ./pkg/DEBIAN ]; then
+            echo "[info] building from root"
+          fi
+          mkdir -p pkg/DEBIAN pkg/usr/local/bin pkg/usr/share/applications pkg/usr/share/icons/hicolor/scalable/apps
+          install -m 0755 bin/whatsapp-waydroid pkg/usr/local/bin/whatsapp-waydroid
+          install -m 0644 WhatsApp-Waydroid.desktop pkg/usr/share/applications/WhatsApp-Waydroid.desktop
+          if [ -f assets/icon.svg ]; then
+            install -m 0644 assets/icon.svg pkg/usr/share/icons/hicolor/scalable/apps/whatsapp-waydroid.svg
+          fi
+          echo "Package: whatsapp-waydroid" > pkg/DEBIAN/control
+          echo "Version: $(cat VERSION)" >> pkg/DEBIAN/control
+          echo "Section: utils" >> pkg/DEBIAN/control
+          echo "Priority: optional" >> pkg/DEBIAN/control
+          echo "Architecture: amd64" >> pkg/DEBIAN/control
+          echo "Maintainer: Josivan Tarcío <dev@example.com>" >> pkg/DEBIAN/control
+          echo "Depends: bash, waydroid" >> pkg/DEBIAN/control
+          echo "Description: Launcher nativo do WhatsApp via Waydroid" >> pkg/DEBIAN/control
+          echo " Integra o WhatsApp oficial (Android) em container Waydroid, com atalho desktop." >> pkg/DEBIAN/control
+
+          fakeroot dpkg-deb --build pkg whatsapp-waydroid_$(cat VERSION)_amd64.deb
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            whatsapp-ubuntu-native/whatsapp-waydroid_*.deb
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
