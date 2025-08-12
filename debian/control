@@ -1,0 +1,11 @@
+Source: whatsapp-waydroid
+Section: utils
+Priority: optional
+Maintainer: WhatsApp Ubuntu <dev@example.com>
+Standards-Version: 4.6.2
+
+Package: whatsapp-waydroid
+Architecture: amd64
+Depends: bash, waydroid, ${misc:Depends}
+Description: Launcher nativo do WhatsApp via Waydroid
+ Integra o WhatsApp oficial (Android) em container Waydroid, com atalho desktop.

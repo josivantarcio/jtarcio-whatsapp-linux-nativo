@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+
+# Deb build
+pkg/
+*.deb
+
+# Editor
+.vscode/
+.idea/
+
+# Logs
+*.log

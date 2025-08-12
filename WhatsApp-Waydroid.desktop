@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=WhatsApp (Waydroid)
+Comment=Executa o WhatsApp Android em um container Waydroid
+Exec=/home/josivan/ws/whatsapp-linux/whatsapp-ubuntu-native/bin/whatsapp-waydroid
+Icon=whatsapp-waydroid
+Terminal=false
+Type=Application
+Categories=Network;Chat;InstantMessaging;
+StartupNotify=true

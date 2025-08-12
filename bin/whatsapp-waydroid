@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+pkg=com.whatsapp
+
+have_waydroid() {
+  command -v waydroid >/dev/null 2>&1
+}
+
+start_session() {
+  if ! waydroid status | grep -q "Session: RUNNING"; then
+    echo "[info] Iniciando sessão Waydroid..."
+    nohup waydroid session start >/dev/null 2>&1 &
+    # aguardar até 20s
+    for i in {1..20}; do
+      if waydroid status | grep -q "Session: RUNNING"; then
+        break
+      fi
+      sleep 1
+    done
+  fi
+}
+
+launch_app() {
+  echo "[info] Abrindo WhatsApp (Android) via Waydroid..."
+  waydroid app launch "$pkg"
+}
+
+if ! have_waydroid; then
+  echo "[erro] Waydroid não encontrado. Instale com: sudo apt install waydroid" >&2
+  exit 1
+fi
+
+start_session
+launch_app
